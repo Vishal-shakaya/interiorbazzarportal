@@ -4,8 +4,8 @@ The Portal is what end users see (browsing + buyer/seller dashboards). Rebuild t
 
 ## Read first
 - **[PROTOTYPE_PARITY.md](PROTOTYPE_PARITY.md)** — the live tracker: the 8 parity dimensions, the per-page status matrix, the screenshot-diff loop, and the ported design tokens. **Read before touching any page.**
-- **[docs/README.md](docs/README.md)** — portal overview + index of the standards below.
-- App specs in **[docs/](docs/)**: `style.md`, `seo.md`, `copywriting.md`, `react-project-structure.md`, `modules-features-flow.md`, and **`docs/pages/<page>.md`** — read the one page you're building.
+- **[claude/README.md](claude/README.md)** — portal overview + index of the standards below.
+- App specs in **[claude/](claude/)**: `style.md`, `seo.md`, `copywriting.md`, `react-project-structure.md`, `modules-features-flow.md`, and **`claude/pages/<page>.md`** — read the one page you're building.
 - Source of truth: **`../Prototype/ib_prototype_7.2.1/`** (design = `assets/theme.css`, data = `assets/ib-*.js`).
 - Shared: [../docs/integration.md](../docs/integration.md) · [../docs/environment-and-backend.md](../docs/environment-and-backend.md) · [../docs/milestones.md](../docs/milestones.md).
 
