@@ -1,0 +1,222 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   CENTRAL DESIGN TOKENS — single source of truth for the whole portal.
+   Tailwind v4 reads these and generates utilities:
+     --color-forest    -> bg-forest / text-forest / border-forest
+     --font-serif      -> font-serif
+     --radius-card     -> rounded-card
+     --shadow-card     -> shadow-card
+   Change a value here and it updates everywhere. Never hardcode a hex/font.
+   Ported from the original interior-bazzar-funnel prototype.
+   ========================================================================= */
+@theme {
+  /* ---- brand greens (ported 1:1 from prototype theme.css) ---- */
+  --color-forest: #085041; /* --color-green        */
+  --color-forest-deep: #04342c; /* --color-green-dark   */
+  --color-accent: #1d9e75; /* --color-accent       */
+  --color-green-light: #e1f5ee; /* tints, badge fills   */
+  --color-green-mint: #9fe1cb; /* on-dark accents      */
+
+  /* ---- secondary / category coding ---- */
+  --color-amber: #ba7517;
+  --color-amber-light: #fdf3e3;
+  --color-navy: #1a3a6e;
+  --color-navy-light: #dceeff;
+  --color-plum: #5a1a7a;
+  --color-plum-light: #f3e8ff;
+
+  /* ---- surfaces ---- */
+  --color-bone: #f7f6f2; /* --color-bg  (warm app bg) */
+  --color-bone-card: #fffdf8; /* --color-paper (cream card) */
+  --color-bone-tint: #eeece5; /* hover fill                 */
+  --color-chip: #eeeae0; /* filter-chip rest          */
+  --color-chip-hover: #e2dfd3; /* filter-chip hover         */
+
+  /* ---- text ---- */
+  --color-ink: #1a1a17; /* --color-text     */
+  --color-muted: #777777; /* --color-muted    */
+  --color-light: #aaaaaa; /* placeholders/icons */
+
+  /* ---- lines / states ---- */
+  --color-line: #e8e6df; /* --color-border        */
+  --color-line-strong: #d8d5cb; /* --border-strong       */
+  --color-sel-bg: #e1f5ee; /* selected = green-light */
+  --color-success: #27ae60;
+  --color-success-light: #e8f7ee;
+  --color-danger: #c0392b;
+  --color-danger-light: #fdecea;
+  --color-err: #c0392b;
+  --color-err-bg: #fdecea;
+
+  /* ---- typography ---- */
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-serif: "DM Serif Display", Georgia, serif;
+  --font-display: "Cormorant Garamond", serif;
+
+  /* ---- radius (prototype scale) ---- */
+  --radius-field: 10px; /* --radius-md */
+  --radius-card: 14px; /* --radius-lg */
+  --radius-pill: 30px; /* --radius-pill */
+
+  /* ---- shadow (prototype: soft, green-tinted, warm) ---- */
+  --shadow-card: 0 8px 22px rgb(8 80 65 / 0.08); /* --shadow-md */
+  --shadow-soft: 0 2px 8px rgb(8 80 65 / 0.05); /* --shadow-sm */
+  --shadow-pop: 0 14px 36px rgb(8 80 65 / 0.12); /* --shadow-lg */
+  --shadow-btn: 0 4px 14px rgb(8 80 65 / 0.2); /* --shadow-btn */
+
+  /* ---- content widths (the prototype's .main-inner is max 1600px) ---- */
+  --container-shell: 1600px; /* wide browse/listing pages */
+  --container-prose: 760px; /* narrow reading column (legal/blog post) */
+}
+
+/* =========================================================================
+   BASE LAYER — global element defaults.
+   ========================================================================= */
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-progress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+}
+
+/* =========================================================================
+   TYPOGRAPHY UTILITIES — named, reusable type styles.
+   Use <h1 class="display-1"> etc. instead of ad-hoc text-3xl everywhere.
+   ========================================================================= */
+@layer components {
+  .display-1 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-forest);
+    font-size: clamp(31px, 7.4vw, 50px);
+    line-height: 1.04;
+    letter-spacing: -0.5px;
+  }
+
+  .display-2 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-forest);
+    font-size: clamp(22px, 4vw, 27px);
+    line-height: 1.15;
+  }
+
+  .heading {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-forest);
+    font-size: 24px;
+    line-height: 1.15;
+  }
+
+  .eyebrow {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-forest);
+  }
+
+  /* dropdown menu row — used by topbar profile menu and similar popovers */
+  .menu-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 16px;
+    font-size: 14px;
+    color: var(--color-ink);
+    text-align: left;
+    transition: background-color 0.15s;
+  }
+  .menu-row:hover {
+    background-color: var(--color-bone-tint);
+  }
+
+  /* section header — ported from prototype .sec-head / .sec-eye / .sec-title */
+  .sec-eye {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-forest);
+  }
+  .sec-eye::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--color-forest);
+  }
+  .sec-title {
+    font-family: Georgia, "DM Serif Display", serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  .sec-title em {
+    color: var(--color-forest);
+    font-style: italic;
+  }
+  /* editorial serif used by hero headline (prototype uses Georgia, not DM Serif) */
+  .font-editorial {
+    font-family: Georgia, "DM Serif Display", serif;
+  }
+
+  /* dropdown arrow for <Select> — forest chevron, right-aligned */
+  .select-chevron {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23085041' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+  }
+}
